@@ -17,12 +17,17 @@ public class EscapeMenu : MonoBehaviour
         escapemenu.SetActive(false);
         escapemenubackground.SetActive(false);
         IsPaused = false;
-        SceneManager.LoadScene("Title Sceen");
+        settingsmenu.SetActive(false);
+        SceneManager.LoadScene("Title Screen");
     }
 
-    public void QuitGame()
+    public void Quits()
     {
+        Resume();
         Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void PauseUnPause(InputAction.CallbackContext ctx)

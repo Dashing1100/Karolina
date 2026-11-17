@@ -9,4 +9,5 @@ EditorBuildSettings:
     path: Assets/Matthew Folder/Scenes/Matthew Scene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 85cf87063bc95a84eb198f0dc609fafe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
