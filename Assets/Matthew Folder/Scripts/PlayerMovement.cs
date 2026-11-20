@@ -178,13 +178,8 @@ public class PlayerMovement : MonoBehaviour
             appliedAcceleration *= airAccelerationMultiplier;
         }
 
-        //if(isPrincess == false && jumpCTXheld == true)
-        //{
-        //    appliedAcceleration *= jumpWalkSlowness;
-        //}
-
         rb.AddForce(appliedAcceleration * xForce); // movement acceleration
-        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed) * (jumpCTXheld && isGrounded ? jumpWalkSlowness : 1); // clamp speed  
+        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed) * (jumpCTXheld && isGrounded && jumpForce > 12 ? jumpWalkSlowness : 1); // clamp speed  
 
         // --------------------------------------------- //
         // if unable to jump or not on the wall, store velocities
