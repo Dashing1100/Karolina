@@ -364,7 +364,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   airAccelerationMultiplier: 0.8
-  jumpWalkSlowness: 0.5
+  jumpWalkSlowness: 0.9
   speedMultiplier: 1
   playerCollider: {fileID: 6607702203987007539}
 --- !u!50 &1897885751914146999
