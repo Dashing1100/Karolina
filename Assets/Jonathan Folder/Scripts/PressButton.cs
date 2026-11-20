@@ -16,11 +16,11 @@ public class PressButton : MonoBehaviour
     [SerializeField] public float TimeVar = 1f;
     public Vector3 Mover;
     public Vector3 OG;
-    public bool isPress = false;
-    public bool isMover = false;
-    public bool isGhost = false;
-    public bool isFlip = false;
-    public bool Flippy = false;
+    private bool isPress = false;
+    private bool isMover = false;
+    private bool isGhost = false;
+    private bool isFlip = false;
+    private bool Flippy = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
