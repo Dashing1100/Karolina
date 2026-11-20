@@ -315,6 +315,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 424d0774-fa60-4702-9211-e97624b32c04
+    m_ActionName: 'Player/Frog Move[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d952299c-6c5c-4786-8a2f-4009e065d858
+    m_ActionName: 'Player/Frog Jump[/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 15803013-cfd0-4b5e-baa5-9a75b9422f0d
+    m_ActionName: 'UI/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -335,6 +347,11 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 10
   jumpForce: 5
+  baseJumpForce: 10
+  minJumpForce: 5
+  maxJumpForce: 5
+  speedOfJumpIncrease: 1
+  isPrincess: 0
   jumpCoyoteTime:
     cooldown: 0
   wallCoyoteTime:
@@ -343,7 +360,11 @@ MonoBehaviour:
     cooldown: 0
   runFriction: 0
   resistFriction: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
   airAccelerationMultiplier: 0.8
+  jumpWalkSlowness: 0.5
   speedMultiplier: 1
   playerCollider: {fileID: 6607702203987007539}
 --- !u!50 &1897885751914146999

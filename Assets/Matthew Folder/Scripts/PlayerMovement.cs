@@ -3,15 +3,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class Cooldown
+public struct Cooldown
 {
     [SerializeField] private float cooldown;
     private float lastTriggerTime;
 
     // public constructor
-    public Cooldown()
+    public Cooldown(float lastTriggerTime)
     {
-        lastTriggerTime = -100f;
+        cooldown = 0;
+        this.lastTriggerTime = lastTriggerTime;
     }
 
     public void Trigger()
@@ -44,18 +45,26 @@ public class PlayerMovement : MonoBehaviour
     [Header("Base Stats")]
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float acceleration = 10f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float baseJumpForce = 10;
+    [SerializeField] private float minJumpForce = 5f;
+    [SerializeField] private float maxJumpForce = 5f;
+    [SerializeField] private float speedOfJumpIncrease = 1;
+    private float timer;
+    [SerializeField] private bool isPrincess;
 
     [Header("Control QOL")]
-    [Tooltip("In seconds. Time after leaving the jump window you are still able to jump.")][SerializeField] private Cooldown jumpCoyoteTime = new();
-    [Tooltip("In seconds. Time after leaving the jump window you are still able to jump.")][SerializeField] private Cooldown wallCoyoteTime = new();
-    [Tooltip("In seconds. Time before enter the jump window you are still able to jump.")][SerializeField] private Cooldown bufferTime = new();
+    [Tooltip("In seconds. Time after leaving the jump window you are still able to jump.")][SerializeField] private Cooldown jumpCoyoteTime = new(-100);
+    [Tooltip("In seconds. Time after leaving the jump window you are still able to jump.")][SerializeField] private Cooldown wallCoyoteTime = new(-100);
+    [Tooltip("In seconds. Time before enter the jump window you are still able to jump.")][SerializeField] private Cooldown bufferTime = new(-100);
     [SerializeField] private float runFriction = 0f;
     [SerializeField] private float resistFriction = 2f;
+    [SerializeField] private LayerMask groundLayer;
     private float XLinearDampening = 0f;
 
     [Header("Stat Buffs")]
-    [SerializeField] private float airAccelerationMultiplier = 0.8f; 
+    [SerializeField] private float airAccelerationMultiplier = 0.8f;
+    [SerializeField] private float jumpWalkSlowness = .5f;
     [SerializeField] private float speedMultiplier = 1f;
 
     [Header("other stats idk")]
@@ -63,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isOnWall = false;
     private bool isResisting = false;
     private bool isCrouching = false;
+    private bool jumpCTXheld = false;
     private Vector2 xForce;
     private float storedVelocity;
 
@@ -81,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int isCrouchingHash = Animator.StringToHash("isCrouching");
 
     // after everything is done loading
-    void Start()
+    void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -92,9 +102,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rb.linearVelocityX != 0)
+        Debug.Log(rb.linearVelocityX);
+
+        if (Mathf.Abs(rb.linearVelocityX) < 0.01f)
         {
             sr.flipX = rb.linearVelocityX < 0;
+        }
+
+        jumpForce = Mathf.Clamp(jumpForce, minJumpForce, maxJumpForce);
+        if (jumpCTXheld == true)
+        {
+            timer += Time.deltaTime;
+            if (timer >= speedOfJumpIncrease)
+            {
+                jumpForce++;
+                timer -= speedOfJumpIncrease;
+            }
         }
     }
 
@@ -155,6 +178,11 @@ public class PlayerMovement : MonoBehaviour
             appliedAcceleration *= airAccelerationMultiplier;
         }
 
+        if(isPrincess == false && jumpCTXheld == true)
+        {
+            appliedAcceleration *= jumpWalkSlowness;
+        }
+
         rb.AddForce(appliedAcceleration * xForce); // movement acceleration
         rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed); // clamp speed  
 
@@ -172,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
             if (!wallCoyoteTime.IsReady() || !jumpCoyoteTime.IsReady())
             {
                 rb.linearVelocityY = jumpForce;
+                jumpForce = baseJumpForce;
 
                 Debug.Log("coyote time remaining: " + wallCoyoteTime.Remaining() + " | " + "on the ground: " + isGrounded + " | " + "buffer remaining: " + bufferTime.Remaining());
 
@@ -201,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + playerCollider.offset + playerCollider.bounds.size.y / 2f * Vector2.down;
         Vector2 boxSize = new(playerCollider.bounds.size.x * 0.9f, 0.05f);
 
-        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0, Vector2.down, 0, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0, Vector2.down, 0, groundLayer);
         return hit.collider != null && hit.normal.y > 0.65f;
     }
 
@@ -211,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 origin = (Vector2)transform.position + playerCollider.offset + playerCollider.bounds.size.x / 2f * Vector2.left;
         Vector2 boxSize = new(0.05f, 0.9f * playerCollider.bounds.size.y);
 
-        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0, Vector2.right, playerCollider.bounds.size.x, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0, Vector2.right, playerCollider.bounds.size.x, groundLayer);
         return hit.collider != null && Mathf.Abs(hit.normal.x) > 0.65f;
     }
 
@@ -237,12 +266,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx)
     {
-        // short circuits
-        if (!ctx.performed) return;
-
         Debug.Log("please jump please");
-
-        bufferTime.Trigger();
+        if(isPrincess == true)
+        {
+            bufferTime.Trigger();
+        }
+        if (ctx.started && isPrincess == false)
+        {
+            jumpCTXheld = true;
+        }
+        else if (ctx.canceled && isPrincess == false)
+        {
+            jumpCTXheld = false;
+            bufferTime.Trigger();
+        }
     }
 
     private void OnDrawGizmos()
