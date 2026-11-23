@@ -104,11 +104,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log(rb.linearVelocityX);
 
-        if (Mathf.Abs(rb.linearVelocityX) < 0.01f)
-        {
-            sr.flipX = rb.linearVelocityX < 0;
-        }
-
         jumpForce = Mathf.Clamp(jumpForce, minJumpForce, maxJumpForce);
         if (jumpCTXheld == true)
         {
@@ -222,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
     private bool GroundCheck()
     {
         // cast thin box at the player's feet and verify the hit normal points upwards
-        Vector2 origin = (Vector2)transform.position + playerCollider.offset + playerCollider.bounds.size.y / 2f * Vector2.down;
+        Vector2 origin = new(playerCollider.bounds.center.x, playerCollider.bounds.min.y);
         Vector2 boxSize = new(playerCollider.bounds.size.x * 0.9f, 0.05f);
 
         RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0, Vector2.down, 0, groundLayer);
@@ -247,6 +242,27 @@ public class PlayerMovement : MonoBehaviour
         float xInput = ctx.ReadValue<Vector2>().x;
 
         xForce = new Vector2(xInput, 0);
+
+        if (xForce.x > 0)
+        {
+            sr.flipX = false;
+        }
+        else if (xForce.x < 0)
+        {
+            sr.flipX = true;
+        }
+        if (isPrincess == false)
+        {
+
+            if (xForce.x < 0)
+            {
+                sr.flipX = false;
+            }
+            else if (xForce.x > 0)
+            {
+                sr.flipX = true;
+            }
+        }
 
         // crouching (below a certain threshold so controllers crouch on slight imperfections)
         if (Vector2.Dot(Vector2.up, ctx.ReadValue<Vector2>().normalized) < -0.5f)
@@ -279,9 +295,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // cast thin box at the player's feet and verify the hit normal points upwards
-        Vector2 origin = (Vector2)transform.position + playerCollider.offset + playerCollider.bounds.size.y / 2f * Vector2.down;
-        Vector2 boxSize = new(playerCollider.bounds.size.x * 0.9f, 0.02f);
+        Vector2 origin = new(playerCollider.bounds.center.x, playerCollider.bounds.min.y);
+        Vector2 boxSize = new(playerCollider.bounds.size.x * 0.9f, 0.05f);
 
+        Gizmos.DrawWireCube(origin, boxSize);
     }
 }
