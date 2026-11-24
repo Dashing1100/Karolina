@@ -362,7 +362,7 @@ MonoBehaviour:
   baseJumpForce: 10
   minJumpForce: 10
   maxJumpForce: 15
-  speedOfJumpIncrease: 0.4
+  speedOfJumpIncrease: 2.5
   isPrincess: 0
   jumpCoyoteTime:
     cooldown: 0.1
@@ -379,6 +379,7 @@ MonoBehaviour:
   jumpWalkSlowness: 0.9
   speedMultiplier: 1
   playerCollider: {fileID: 5666722966374197143}
+  jumpSlider: {fileID: 0}
 --- !u!50 &2988554827723755929
 Rigidbody2D:
   serializedVersion: 5

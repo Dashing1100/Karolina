@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [Serializable]
 public struct Cooldown
@@ -50,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minJumpForce = 5f;
     [SerializeField] private float maxJumpForce = 5f;
     [SerializeField] private float speedOfJumpIncrease = 1;
-    private float timer;
     [SerializeField] private bool isPrincess;
 
     [Header("Control QOL")]
@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public Collider2D playerCollider;
     private Animator animator;
+    public Slider jumpSlider;
 
     [Header("Animator Hashing")]
     private static readonly int IsGroundedHash = Animator.StringToHash("isGrounded");
@@ -102,17 +103,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(rb.linearVelocityX);
+        //Debug.Log(rb.linearVelocityX);
 
         jumpForce = Mathf.Clamp(jumpForce, minJumpForce, maxJumpForce);
         if (jumpCTXheld == true)
         {
-            timer += Time.deltaTime;
-            if (timer >= speedOfJumpIncrease)
-            {
-                jumpForce++;
-                timer -= speedOfJumpIncrease;
-            }
+            jumpForce += Time.deltaTime * speedOfJumpIncrease;
+        }
+
+        if (jumpSlider != null)
+        {
+            float sliderVal = Mathf.Lerp(0, maxJumpForce - minJumpForce, (jumpForce - minJumpForce) / (maxJumpForce - minJumpForce));
+            jumpSlider.value = sliderVal;
         }
     }
 
@@ -174,7 +176,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.AddForce(appliedAcceleration * xForce); // movement acceleration
-        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed) * (jumpCTXheld && isGrounded && jumpForce > 12 ? jumpWalkSlowness : 1); // clamp speed  
+        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed) * (jumpCTXheld && isGrounded && jumpForce > 11 ? jumpWalkSlowness : 1); // clamp speed  
+
+        if (jumpSlider != null)
+        {
+            jumpSlider.minValue = 0;
+            jumpSlider.maxValue = maxJumpForce - minJumpForce;
+            if (jumpForce > 11)
+            {
+                jumpSlider.gameObject.SetActive(true);
+            }
+        }
 
         // --------------------------------------------- //
         // if unable to jump or not on the wall, store velocities
@@ -191,13 +203,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocityY = jumpForce;
                 jumpForce = baseJumpForce;
+                jumpSlider.gameObject.SetActive(false);
 
-                Debug.Log("coyote time remaining: " + wallCoyoteTime.Remaining() + " | " + "on the ground: " + isGrounded + " | " + "buffer remaining: " + bufferTime.Remaining());
+                //Debug.Log("coyote time remaining: " + wallCoyoteTime.Remaining() + " | " + "on the ground: " + isGrounded + " | " + "buffer remaining: " + bufferTime.Remaining());
 
                 // boost off wall
                 if (!wallCoyoteTime.IsReady() && !isGrounded)
                 {
-                    Debug.Log("boost");
+                    //Debug.Log("boost");
 
                     float minBoost = maxSpeed / 2f;
                     float boost = -storedVelocity - Mathf.Clamp(-storedVelocity, -minBoost, minBoost) + minBoost * Mathf.Sign(-storedVelocity);
@@ -277,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx)
     {
-        Debug.Log("please jump please");
+        //Debug.Log("please jump please");
         if(isPrincess == true)
         {
             bufferTime.Trigger();
@@ -285,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
         if (ctx.started && isPrincess == false)
         {
             jumpCTXheld = true;
+
         }
         else if (ctx.canceled && isPrincess == false)
         {
