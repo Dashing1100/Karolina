@@ -7,7 +7,7 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "Princess Move",
+                    "name": "Frog Move",
                     "type": "Value",
                     "id": "351f2ccd-1f9f-44bf-9bec-d62ac5c5f408",
                     "expectedControlType": "Vector2",
@@ -17,7 +17,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Frog Move",
+                    "name": "Princess Move",
                     "type": "Value",
                     "id": "424d0774-fa60-4702-9211-e97624b32c04",
                     "expectedControlType": "Vector2",
@@ -67,7 +67,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Princess Jump",
+                    "name": "Frog Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
                     "expectedControlType": "",
@@ -77,7 +77,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Frog Jump",
+                    "name": "Princess Jump",
                     "type": "Button",
                     "id": "d952299c-6c5c-4786-8a2f-4009e065d858",
                     "expectedControlType": "",
@@ -125,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -136,7 +136,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -147,7 +147,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -158,7 +158,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -169,7 +169,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -180,7 +180,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -191,7 +191,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -202,7 +202,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Princess Move",
+                    "action": "Frog Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -213,7 +213,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -224,7 +224,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -246,7 +246,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -257,7 +257,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -268,7 +268,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -279,7 +279,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -290,7 +290,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Frog Move",
+                    "action": "Princess Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -455,7 +455,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Princess Jump",
+                    "action": "Frog Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -466,7 +466,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Princess Jump",
+                    "action": "Frog Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -477,7 +477,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Princess Jump",
+                    "action": "Frog Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -488,7 +488,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Frog Jump",
+                    "action": "Princess Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -499,7 +499,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Frog Jump",
+                    "action": "Princess Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -510,7 +510,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Frog Jump",
+                    "action": "Princess Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
