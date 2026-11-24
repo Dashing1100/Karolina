@@ -182,10 +182,10 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpSlider.minValue = 0;
             jumpSlider.maxValue = maxJumpForce - minJumpForce;
-            if (jumpForce > 11)
-            {
-                jumpSlider.gameObject.SetActive(true);
-            }
+            //if (jumpForce > 11)
+            //{
+            //    jumpSlider.gameObject.SetActive(true);
+            //}
         }
 
         // --------------------------------------------- //
@@ -203,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearVelocityY = jumpForce;
                 jumpForce = baseJumpForce;
-                jumpSlider.gameObject.SetActive(false);
+                //jumpSlider.gameObject.SetActive(false);
 
                 //Debug.Log("coyote time remaining: " + wallCoyoteTime.Remaining() + " | " + "on the ground: " + isGrounded + " | " + "buffer remaining: " + bufferTime.Remaining());
 
